@@ -9,12 +9,15 @@ const typeDefs = `
   }
 
   type Event {
+    id:ID!
+    channel:ID!
     type:String
     message:String
   }
   
   type Subscription {
     channel(id:ID!): Event
+    user(id:ID!):Event
   }
 `
 
@@ -24,8 +27,9 @@ const resolvers = {
   },
   Mutation:{
     sendMessage: (_, {channel,message},{pubsub}) => {
-      const event = {type:"message",message}
-      pubsub.publish(channel, { channel: { type:"message", message } })
+      const id = Math.random().toString(36).substring(2, 15)
+      const event = {type:"message",message, id}
+      pubsub.publish(channel, { channel: { ...event } })
       return event
     }
   },
