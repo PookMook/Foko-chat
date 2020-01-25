@@ -1,0 +1,16 @@
+{
+  "name": "foko-backend",
+  "version": "0.0.1",
+  "description": "backend",
+  "main": "src/app.js",
+  "dependencies": {
+    "graphql-yoga": "^1.18.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node src/app.js"
+  },
+  "author": "Arthur Juchereau",
+  "license": "MIT"
+}
