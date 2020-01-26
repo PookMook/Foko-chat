@@ -21,6 +21,33 @@ const typeDefs = `
   }
 `
 
+//Need to load conversations/Users/Messages from MongoDB
+const users = {
+  1:{
+    id:1,
+    name:"Arthur"
+  }
+}
+
+const channels = {
+  xylo:{
+    id:"xylo",
+    users:[users["1"]]
+  }
+}
+
+const dispatchToUser = (event,pubsub) => {
+  //Fetch Users in event.channel
+  const targetChannel = channels[event.channel]
+  if(targetChannel){
+      const participants = targetChannel.users
+      //Dispatch to Each User
+      for(let i=participants.length;i>0;i--){
+        pubsub.publish(participants[i-1].id, { user: { ...event } })
+      }
+  }
+}
+
 const resolvers = {
   Query: {
     hello: (_, { name }) => `Hello ${name || 'World'}`,
@@ -28,8 +55,9 @@ const resolvers = {
   Mutation:{
     sendMessage: (_, {channel,message},{pubsub}) => {
       const id = Math.random().toString(36).substring(2, 15)
-      const event = {type:"message",message, id}
-      pubsub.publish(channel, { channel: { ...event } })
+      const event = {type:"message",message, id, channel}
+      dispatchToUser(event,pubsub)
+      //
       return event
     }
   },
@@ -38,6 +66,12 @@ const resolvers = {
       subscribe: (parent, args, { pubsub }) => {
         const channel = args.id
         return pubsub.asyncIterator(channel)
+      },
+    },
+    user: {
+      subscribe: (parent, args, { pubsub }) => {
+        const user = args.id
+        return pubsub.asyncIterator(user)
       },
     },
   }
