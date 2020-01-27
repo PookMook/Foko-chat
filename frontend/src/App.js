@@ -9,6 +9,7 @@ import useSubscription from './hooks/subscription'
 
 import Header from './components/header'
 import Chat from './components/chat'
+import LastMessages from './components/lastMessages'
 
 import './App.css';
 
@@ -16,9 +17,12 @@ function App() {
 
   const events = useSubscription("1",(event)=>{console.log("Display Event",event)})
 
+
+
   return (
     <Router>
       <Header/>
+      <LastMessages events={events}/>
       <main>
         <Switch>
           <Route exact path="/">

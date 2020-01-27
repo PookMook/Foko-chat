@@ -4,7 +4,8 @@ import GQL from '../helpers/gql'
 
 export default (userID,callback) => {
   const [events,addEvent] = useReducer((events, newEvent) => {
-    return [...events,newEvent];
+    //bring new element to the top
+    return [newEvent,...events];
   }, []);
 
 
