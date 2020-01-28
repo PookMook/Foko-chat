@@ -1,10 +1,12 @@
 import React from 'react'
 import styles from './lastMessage.module.css'
 
+import Channel from './Channel'
+
 export default ({events}) => {
   return (
-    <ul className={styles.events}>
-      {events.map(e=><li key={e.id}>{JSON.stringify(e)}</li>)}
-    </ul>
+    <section className={styles.events}>
+      {events.map(e=><Channel key={`message-${e.id}`} {...e}/>)}
+    </section>
   )
 }

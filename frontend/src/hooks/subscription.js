@@ -8,6 +8,22 @@ export default (userID,callback) => {
     return [newEvent,...events];
   }, []);
 
+  const [channels,addToChannel] = useReducer((channels, newEvent) => {
+    //Test if channel exist
+    let channel = channels.find(c=>c.id===newEvent.channel)
+    if(channel){
+      //Need to remove it from array, to place it on top
+      const index = channels.indexOf(channel)
+      channels.splice(index,1)
+    }
+    else{
+      //Create channel structure
+      channel = {name:newEvent.channelName,id:newEvent.channel,events:[]}
+    }
+    channel.events.unshift(newEvent)
+    return [channel, ...channels]
+  }, [])
+
 
   //Connect to a Chat Websocket
   useEffect(()=>{
@@ -19,18 +35,21 @@ export default (userID,callback) => {
         return
       }
       addEvent(data.user)
+      addToChannel(data.user)
       callback(data.user)
     }
 
 
     //Open WS connection to GraphQL
-    const webSocket = new WebSocket("ws://localhost:4000", "graphql-ws")
+    const backend = process.env.BACKEND || "localhost:3030"
+    const webSocket = new WebSocket("ws://"+backend, "graphql-ws")
 
     //Prepare query/variables
     const query = `subscription($id:ID!){
       user(id:$id){
         id
         channel
+        channelName
         type
         message
       }
@@ -86,5 +105,5 @@ export default (userID,callback) => {
     
   },[])
 
-  return events
+  return {events,channels}
 }

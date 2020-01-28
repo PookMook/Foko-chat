@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+body{
+  margin:0;
+  background-color: #303030;
+  color:#f0f0f0;
+}
+a {
+  color:white;
+  text-decoration: none;
+}
+
+
+
+#root {
+  display:grid;
+  min-height:100vh;
+  grid-template: 
+  "header header messages" auto
+  "chats  chat   messages" 1fr
+  /300px  1fr    300px;
+}
+
+#root > header {
+  grid-area: header;
+}
+
+#root > section {
+  grid-area:messages
+}
+
+#root > aside {
+  grid-area:chats
+}

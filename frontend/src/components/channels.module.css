@@ -1,0 +1,19 @@
+.channel{
+  margin:0;
+  padding:0.5rem;
+  border-bottom:1px solid #606060;
+  border-right: 1px solid #606060;
+  user-select: none;
+}
+.channel:hover{
+  background-color:#202020;
+  cursor:pointer;
+}
+
+.channel > h1 {
+  margin:0 0 0.5rem 0;
+}
+
+.channel > p {
+  margin:0;
+}

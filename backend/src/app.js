@@ -11,12 +11,12 @@ const typeDefs = `
   type Event {
     id:ID!
     channel:ID!
+    channelName:String
     type:String
     message:String
   }
   
   type Subscription {
-    channel(id:ID!): Event
     user(id:ID!):Event
   }
 `
@@ -33,10 +33,14 @@ const channels = {
   xylo:{
     id:"xylo",
     users:[users["1"]]
-  }
+  },
+  Xylo:{
+    id:"Xylo",
+    users:[users["1"]]
+  },
 }
 
-const dispatchToUser = (event,pubsub) => {
+const messageToUser = (event,pubsub) => {
   //Fetch Users in event.channel
   const targetChannel = channels[event.channel]
   if(targetChannel){
@@ -55,21 +59,15 @@ const resolvers = {
   Mutation:{
     sendMessage: (_, {channel,message},{pubsub}) => {
       const id = Math.random().toString(36).substring(2, 15)
-      const event = {type:"message",message, id, channel}
-      dispatchToUser(event,pubsub)
+      const event = {type:"message",message, id, channel, channelName:channel}
+      messageToUser(event,pubsub)
       //
       return event
     }
   },
   Subscription: {
-    channel: {
-      subscribe: (parent, args, { pubsub }) => {
-        const channel = args.id
-        return pubsub.asyncIterator(channel)
-      },
-    },
     user: {
-      subscribe: (parent, args, { pubsub }) => {
+      subscribe: (_, args, { pubsub }) => {
         const user = args.id
         return pubsub.asyncIterator(user)
       },
