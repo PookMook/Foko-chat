@@ -1,12 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-import styles from './channels.module.css'
+import styles from './channel.module.css'
 import Channel from './Channel'
 
 export default (props) => {
   return(
-    <aside>
+    <aside className={styles.channels}>
       <Link to={`/`}>
         <article className={styles.channel}>
           <h1>New conversation</h1>

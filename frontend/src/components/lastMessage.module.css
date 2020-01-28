@@ -3,9 +3,11 @@
   padding:0;
   background-color:black;
   list-style-type: none;
+  display:grid;
+  align-content: end;
 }
 
-.events > li {
+.events > article {
   margin:0;
   padding:0.5rem;
 }

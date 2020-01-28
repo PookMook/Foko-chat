@@ -5,7 +5,7 @@ import GQL from '../helpers/gql'
 export default (userID,callback) => {
   const [events,addEvent] = useReducer((events, newEvent) => {
     //bring new element to the top
-    return [newEvent,...events];
+    return [...events,newEvent];
   }, []);
 
   const [channels,addToChannel] = useReducer((channels, newEvent) => {
