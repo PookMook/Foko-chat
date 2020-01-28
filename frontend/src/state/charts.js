@@ -1,0 +1,36 @@
+export default {
+  login:{
+    initial: 'UNAUTH',
+    states:{
+      UNAUTH:{
+        on:{
+          login:'SIGNIN',
+          register:'REGISTER'
+        }
+      },
+      SIGNIN:{
+        on:{
+          successLogin:'SUCCESS',
+          failLogin:'ERROR'
+        }
+      },
+      REGISTER:{
+        on:{
+          successRegister:'SUCCESS',
+          failRegister:'ERROR'
+        }
+      },
+      SUCESS:{
+        on:{
+          signout:'UNAUTH'
+        }
+      },
+      ERROR:{
+        on:{
+          login:'SIGNIN',
+          register:'REGISTER'
+        }
+      }   
+    }
+  }
+}

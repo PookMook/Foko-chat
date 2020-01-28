@@ -7,6 +7,10 @@ import {
 
 import useSubscription from '../hooks/subscription'
 
+import { useOvermind } from '../state/index'
+
+import Login from './login'
+
 import Header from './header'
 import LastMessages from './lastMessages'
 import NoMatch from './noMatch'
@@ -19,21 +23,28 @@ function App() {
 
   const {events,channels} = useSubscription("1",(event)=>{console.log("Display Event",event)})
 
+  const {state,_} = useOvermind()
+  const isLoggedIn = state.matches({login:{SUCCESS:true}})
+  const notAuth = state.matches({login:{UNAUTH:true}})
+
   return (
-    <Router>
-      <Header/>
-      <LastMessages events={events}/>
-      <Channels channels={channels}/>
-      <main>
-        <Switch>
-          <Route exact path="/">
-            <p>Home</p>
-          </Route>
-          <Route path="/channel/:id" component={Chat}/>
-          <Route component={NoMatch} />
-        </Switch>
-      </main>
-    </Router>
+    <>
+      {notAuth && <Login />}
+      {isLoggedIn && <Router>
+        <Header/>
+        <LastMessages events={events}/>
+        <Channels channels={channels}/>
+        <main>
+          <Switch>
+            <Route exact path="/">
+              <p>Home</p>
+            </Route>
+            <Route path="/channel/:id" component={Chat}/>
+            <Route component={NoMatch} />
+          </Switch>
+        </main>
+      </Router>}
+    </>
   );
 }
 
