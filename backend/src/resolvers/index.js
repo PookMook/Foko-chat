@@ -3,6 +3,11 @@ const effects = require('../effects/index')
 module.exports = {
   Query: {
     hello: (_, { name }) => `Hello ${name || 'World'}`,
+    login: (_, {email,password}) => {
+      return {
+        token:"HelloWOrld"
+      }
+    }
   },
   Mutation:{
     sendMessage: (_, {channel,message},{pubsub}) => {
