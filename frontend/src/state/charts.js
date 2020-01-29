@@ -1,3 +1,5 @@
+import isEmail from '../helpers/isEmail'
+
 export default {
   login:{
     initial: 'UNAUTH',
@@ -6,12 +8,17 @@ export default {
         on:{
           login:{
             target: 'AUTHENTICATING',
-            condition: state => Boolean(state.authForm.email !== "" && state.authForm.password !== "")
+            condition: state => Boolean(
+              state.authForm.email !== "" 
+              && isEmail(state.authForm.email)
+              && state.authForm.password !== ""
+            )
           },
           register:{
             target: 'REGISTER',
             condition: state => Boolean(
               state.authForm.email !== "" 
+              && isEmail(state.authForm.email)
               && state.authForm.password !== ""
               && state.authForm.password === state.authForm.passwordConfirm
               && state.authForm.username !== ""
