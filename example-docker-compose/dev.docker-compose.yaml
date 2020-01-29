@@ -18,7 +18,7 @@ services:
     links:
       - mongodb:mongo
     ports:
-      - 3031:8081
+      - 3081:8081
   graphql:
     build: 
       context : ./
@@ -28,7 +28,7 @@ services:
       - ./backend/:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 3030:4000
+      - 3080:4000
     depends_on:
       - mongodb
     environment:
@@ -51,7 +51,7 @@ services:
     depends_on:
       - graphql
     environment:
-      - BACKEND=localhost:3030
+      - "REACT_APP_BACKEND=localhost:3080"
 
 networks:
   default:

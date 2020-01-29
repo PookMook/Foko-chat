@@ -41,7 +41,7 @@ export default (userID,callback) => {
 
 
     //Open WS connection to GraphQL
-    const backend = process.env.BACKEND || "localhost:3030"
+    const backend = process.env.REACT_APP_BACKEND || "localhost:3030"
     const webSocket = new WebSocket("ws://"+backend, "graphql-ws")
 
     //Prepare query/variables
@@ -103,7 +103,7 @@ export default (userID,callback) => {
     
     
     
-  },[])
+  },[userID,callback])
 
   return {events,channels}
 }

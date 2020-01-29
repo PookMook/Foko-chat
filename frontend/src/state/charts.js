@@ -4,11 +4,23 @@ export default {
     states:{
       UNAUTH:{
         on:{
-          login:'SIGNIN',
-          register:'REGISTER'
+          login:{
+            target: 'AUTHENTICATING',
+            condition: state => Boolean(state.authForm.email !== "" && state.authForm.password !== "")
+          },
+          register:{
+            target: 'REGISTER',
+            condition: state => Boolean(
+              state.authForm.email !== "" 
+              && state.authForm.password !== ""
+              && state.authForm.password === state.authForm.passwordConfirm
+              && state.authForm.username !== ""
+            )
+          },
+          fillout:null
         }
       },
-      SIGNIN:{
+      AUTHENTICATING:{
         on:{
           successLogin:'SUCCESS',
           failLogin:'ERROR'
@@ -27,8 +39,7 @@ export default {
       },
       ERROR:{
         on:{
-          login:'SIGNIN',
-          register:'REGISTER'
+          fillout:'UNAUTH'
         }
       }   
     }
