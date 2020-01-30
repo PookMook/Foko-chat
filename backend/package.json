@@ -4,7 +4,10 @@
   "description": "backend",
   "main": "src/app.js",
   "dependencies": {
-    "graphql-yoga": "^1.18.3"
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.8.10"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"

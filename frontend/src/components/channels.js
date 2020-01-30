@@ -2,7 +2,7 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 import styles from './channel.module.css'
-import Channel from './Channel'
+import Channel from './channel'
 
 export default (props) => {
   return(
@@ -12,7 +12,7 @@ export default (props) => {
           <h1>New conversation</h1>
         </article>
       </Link>
-      {props.channels.map(c=><Channel key={`channel-${c.id}`} {...c.events[0]}/>)}
+      {props.channels.map(c=><Channel key={`channel-${c.id}`} event={c.events[0]}/>)}
     </aside>
   )
 }

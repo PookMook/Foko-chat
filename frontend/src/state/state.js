@@ -1,8 +1,13 @@
+//Export only primitives
+export const authForm = JSON.stringify({
+  email:"",
+  password:"",
+  passwordConfirm:"",
+  username:""
+})
+export const user = null
+
 export default {
-  authForm:{
-    email:"",
-    password:"",
-    passwordConfirm:"",
-    username:""
-  }
+  authForm:JSON.parse(authForm),
+  user:null
 }

@@ -3,7 +3,25 @@ type Query {
   hello(name: String): String!
 }
 type Mutation{
-  sendMessage(channel:ID!,message:String!):Event!
+  sendMessage(channel:ID!,message:String!,id:ID!,token:String!):Event!
+  login(email:String!,password:String!):Auth!
+  register(email:String!,password:String!,username:String!):Auth!
+  createChannel(name:String,participants:[ID!]): Channel!
+}
+
+type Channel {
+  id:ID!
+  name:String
+}
+
+type Auth {
+  id:ID!
+  token:String!
+  username:String!
+}
+type User {
+  username:String
+  id:ID!
 }
 
 type Event {
@@ -12,9 +30,10 @@ type Event {
   channelName:String
   type:String
   message:String
+  author:User!
 }
 
 type Subscription {
-  user(id:ID!):Event
+  user(id:ID!,token:String!):Event
 }
 `

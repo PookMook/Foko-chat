@@ -2,7 +2,8 @@ import {useReducer, useEffect} from 'react'
 
 import GQL from '../helpers/gql'
 
-export default (userID,callback) => {
+export default ({id,token},callback) => {
+  
   const [events,addEvent] = useReducer((events, newEvent) => {
     //bring new element to the top
     return [...events,newEvent];
@@ -28,6 +29,9 @@ export default (userID,callback) => {
   //Connect to a Chat Websocket
   useEffect(()=>{
 
+    //Open WS connection to GraphQL
+    const backend = process.env.REACT_APP_BACKEND || "localhost:3080"
+    const webSocket = new WebSocket("ws://"+backend, "graphql-ws")
     //Define console.log as default handling of data
     //const handleData = props.handleData || console.log
     const handleData = (_,error,data) => {
@@ -39,23 +43,22 @@ export default (userID,callback) => {
       callback(data.user)
     }
 
-
-    //Open WS connection to GraphQL
-    const backend = process.env.REACT_APP_BACKEND || "localhost:3030"
-    const webSocket = new WebSocket("ws://"+backend, "graphql-ws")
-
     //Prepare query/variables
-    const query = `subscription($id:ID!){
-      user(id:$id){
+    const query = `subscription($id:ID!,$token:String!){
+      user(id:$id, token:$token){
         id
         channel
         channelName
         type
         message
+        author{
+          username
+        }
       }
     }`
     const variables = {
-      "id":userID
+      id,
+      token
     }
     
     //Behavior on responses
@@ -65,7 +68,7 @@ export default (userID,callback) => {
         case GQL.CONNECTION_ACK: {
           webSocket.send(JSON.stringify({
             type: GQL.START,
-            id:userID,
+            id:id,
             payload: { query, variables}
           }))
           break
@@ -101,9 +104,10 @@ export default (userID,callback) => {
             
     }
     
+    //return the cleanup function for useEffect
+    return () => webSocket.close()
     
-    
-  },[userID,callback])
+  },[id,token,callback])
 
   return {events,channels}
 }

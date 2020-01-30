@@ -1,0 +1,25 @@
+.chat{
+  display:grid;
+  align-content: end;
+  grid-template-columns: 5rem 1fr 5rem;
+  grid-template: 
+  "header header header"auto
+  "... ... ..."1fr
+  "chat chat chat"auto
+  "text text submit" auto
+  /5rem 1fr  5rem;
+  > textarea{
+    grid-area:text
+  }
+  > button {
+    grid-area:submit
+  }
+  > section {
+    grid-area:chat;
+    display:flex;
+    flex-direction: column-reverse;
+  }
+  >header{
+    grid-area:header;
+  }
+}

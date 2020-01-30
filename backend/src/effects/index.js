@@ -1,14 +1,20 @@
-const memory = require('../models/memory')
+const models = require('../models/index')
 
 module.exports = {
   messageToUser: (event,pubsub) => {
   //Fetch Users in event.channel
-  const targetChannel = memory.channels[event.channel]
+  const targetChannel = models.getChannel(event.channel)
   if(targetChannel){
-      const participants = targetChannel.users
+
+      //populate Author
+      console.log(event.author)
+      event.author = models.getUser(event.author)
+
+
       //Dispatch to Each User
-      for(let i=participants.length;i>0;i--){
-        pubsub.publish(participants[i-1].id, { user: { ...event } })
+      const participants = targetChannel.users
+      for(let user of participants){
+        pubsub.publish(user.id, { user: { ...event } })
       }
     }
   }

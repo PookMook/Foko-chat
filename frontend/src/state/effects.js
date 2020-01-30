@@ -8,40 +8,32 @@ const askGraphQL = (payload) => {
       "Accept": "application/json"
     },
     body: JSON.stringify(payload),
-  }).then(async response=>{
+  }).then(response=>{
     if(!response.ok){
-      let res = await response.json()
-      if(res){res = res.errors || [{message:"Unknow problem"}]}
-      if(res){res = res.map(e=>e.message).join(', ')}
-      alert(`Something wrong happened =>  ${response.status}, ${response.statusText}.\n${res}`);
-      throw new Error(res)
+      throw new Error(response)
     }
-    const json = response.json()
-    if(json.errors){throw new Error(json.map(e=>e.message).join(', '))}
+    return response.json()
+  })
+  .then(json=>{
+    if(json.errors){
+      throw new Error(json.map(e=>e.message).join(', '))
+    }
     return json.data
   })
 }
 
+const authType = `token
+id
+username`
 
 export default {
   login: (variables) => {
 
     //Prepare GraphQL
     const payload = {
-      query:`query($email:String!,$password:String!){
+      query:`mutation($email:String!,$password:String!){
   login(email:$email,password:$password){
-    token
-    channels{
-      channelName
-      channel
-      events{
-        author
-        channel
-        channelName
-        type
-        message
-      }
-    }
+    ${authType}
   }
 }`,
       variables
@@ -54,22 +46,24 @@ export default {
     const payload = {
       query:`mutation($email:String!,$password:String!,$username:String!){
   register(email:$email,password:$password, username:$username){
-    token
-    channels{
-      channelName
-      channel
-      events{
-        author
-        channel
-        channelName
-        type
-        message
-      }
-    }
+    ${authType}
   }
 }`,
       variables
     }
     return askGraphQL(payload)
+  },
+
+  sendMessage: (args) => {
+    const payload = {
+      query:`mutation($channel:ID!, $message:String!, $id:ID!, $token:String!){
+  sendMessage(channel:$channel,message:$message,id:$id,token:$token){
+    message
   }
+}`,
+      variables:args
+    }
+      askGraphQL(payload)
+  }
+
 }

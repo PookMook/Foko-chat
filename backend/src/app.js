@@ -1,8 +1,9 @@
 const { GraphQLServer, PubSub } = require('graphql-yoga')
-
+const mongoose = require('mongoose');
 const typeDefs = require('./schema/schema')
 const resolvers = require('./resolvers/index')
 
+mongoose.connect(`mongodb://${process.env.MONGO_SERVER}:${process.env.MONGO_SERVER_PORT}/${process.env.MONGO_SERVER_DB}`,{useNewUrlParser: true});
 
 const pubsub = new PubSub()
 

@@ -7,7 +7,7 @@ export default {
       UNAUTH:{
         on:{
           login:{
-            target: 'AUTHENTICATING',
+            target: 'LOGIN',
             condition: state => Boolean(
               state.authForm.email !== "" 
               && isEmail(state.authForm.email)
@@ -27,28 +27,35 @@ export default {
           fillout:null
         }
       },
-      AUTHENTICATING:{
+      LOGIN:{
         on:{
           successLogin:'SUCCESS',
-          failLogin:'ERROR'
+          failLogin:'ERROR_LOGIN'
         }
       },
       REGISTER:{
         on:{
           successRegister:'SUCCESS',
-          failRegister:'ERROR'
+          failRegister:'ERROR_REGISTER'
         }
       },
-      SUCESS:{
+      SUCCESS:{
         on:{
-          signout:'UNAUTH'
+          signout:'UNAUTH',
+          sendMessage:null,
+          selectChannel:null
         }
       },
-      ERROR:{
+      ERROR_LOGIN:{
         on:{
           fillout:'UNAUTH'
         }
-      }   
+      },
+      ERROR_REGISTER:{
+        on:{
+          fillout:'UNAUTH'
+        }
+      }    
     }
   }
 }

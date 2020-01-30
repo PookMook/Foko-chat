@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 
 import { useOvermind } from '../state/index'
 
@@ -10,6 +10,11 @@ export default () => {
   const sending = state.matches({login:{AUTHENTICATING:true}})
   const error = state.matches({login:{ERROR:true}})
 
+  //Suppress before release
+  useEffect(()=>{
+    actions.fillout({target:"email",value:"arthur@juchereau.com"})
+    actions.fillout({target:"password",value:"8jM9#YIW!6CVuHvL"})
+  },[])
 
   return(
     <main className={styles.login}>
