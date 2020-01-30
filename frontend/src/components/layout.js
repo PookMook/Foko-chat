@@ -19,8 +19,8 @@ import './layout.scss';
 
 function Layout() {
 
-  const {state} = useOvermind()
-  const callback = useCallback((event)=>{console.log("Display Event",event)},[])
+  const {state,actions} = useOvermind()
+  const callback = useCallback((event)=>{actions.handleEvent(event)},[])
   const {events,channels} = useSubscription(state.user,callback)
 
   return (

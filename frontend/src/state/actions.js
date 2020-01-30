@@ -72,7 +72,6 @@ export default {
   //Channel management
   sendMessage: ({state,effects},args)=> {
     effects.sendMessage({...args,id:state.user.id,token:state.user.token})
-
   },
   createChannel: ({state,effects},name)=>{
     effects.createChannel({name,participants:[],id:state.user.id,token:state.user.token}).then(response=>{
@@ -81,5 +80,24 @@ export default {
       state.channels.unshift(newChannel)
       state.channelsById.set(newChannel.id,newChannel)
     })
+  },
+
+  //Event Handling
+  handleEvent: ({state},event) => {
+    //Test if channel exist
+    let channel = state.channelsById.get(event.channel)
+    if(channel){
+      //Need to remove it from array, to place it on top
+      const index = state.channels.indexOf(channel)
+      channels.splice(index,1)
+    }
+    else{
+      //Create channel structure
+      channel = {name:event.channelName,id:event.channel,events:[]}
+      state.channelsById.set(event.channel,channel)
+    }
+    channel.events.unshift(event)
+    state.channels = [channel, ...state.channels]
   }
+
 }

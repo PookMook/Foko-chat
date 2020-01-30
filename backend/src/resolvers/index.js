@@ -11,7 +11,7 @@ module.exports = {
       //Need to verify author
       const verif = veryfy(token,id)
       const idR = Math.random().toString(36).substring(2, 15)
-      const event = {type:"message",message, id:idR, channel, channelName:channel,author:verif.id}
+      const event = {type:"message",message, id:idR, channel, author:verif.id}
       effects.messageToUser(event,pubsub)
       return event
     },

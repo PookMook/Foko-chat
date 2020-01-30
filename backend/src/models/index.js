@@ -53,7 +53,6 @@ module.exports = {
     return memory.channels.get(id)
   },
   getUser:(id)=>{
-    console.log("get user",id,memory.users)
     return memory.users.get(id)
   },
 

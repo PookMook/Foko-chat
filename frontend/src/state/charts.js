@@ -44,7 +44,8 @@ export default {
           signout:'UNAUTH',
           sendMessage:null,
           selectChannel:null,
-          createChannel:null
+          createChannel:null,
+          handleEvent:null,
         }
       },
       ERROR_LOGIN:{

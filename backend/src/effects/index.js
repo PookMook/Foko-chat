@@ -5,7 +5,8 @@ module.exports = {
   //Fetch Users in event.channel
   const targetChannel = models.getChannel(event.channel)
   if(targetChannel){
-
+      console.log(targetChannel)
+      event.channelName = targetChannel.name
       //populate Author
       event.author = models.getUser(event.author)
 
