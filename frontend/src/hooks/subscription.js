@@ -9,7 +9,8 @@ export default ({id,token},callback) => {
 
     //Open WS connection to GraphQL
     const backend = process.env.REACT_APP_BACKEND || "localhost:3080"
-    const webSocket = new WebSocket("ws://"+backend, "graphql-ws")
+    const protocol = process.env.REACT_APP_SOCKET_PROTOCOL || "ws"
+    const webSocket = new WebSocket(protocol+"://"+backend, "graphql-ws")
     //Define console.log as default handling of data
     //const handleData = props.handleData || console.log
     const handleData = (_,error,data) => {
