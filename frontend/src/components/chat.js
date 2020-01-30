@@ -5,7 +5,7 @@ import { useOvermind } from '../state/index';
 
 export default (props) => {
 
-  const {state,actions} = useOvermind()
+  const {actions} = useOvermind()
   const [input,setInput] = useState("")
   const { match: { params } } = props;
   const thisChannel = props.channels.find(c=>c.id === params.id) || {name:"Not found", events:[]}

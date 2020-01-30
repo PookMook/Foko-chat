@@ -18,6 +18,9 @@
     grid-area:chat;
     display:flex;
     flex-direction: column-reverse;
+    >p {
+      margin:0;
+    }
   }
   >header{
     grid-area:header;
