@@ -4,28 +4,6 @@ import GQL from '../helpers/gql'
 
 export default ({id,token},callback) => {
   
-  const [events,addEvent] = useReducer((events, newEvent) => {
-    //bring new element to the top
-    return [...events,newEvent];
-  }, []);
-
-  const [channels,addToChannel] = useReducer((channels, newEvent) => {
-    //Test if channel exist
-    let channel = channels.find(c=>c.id===newEvent.channel)
-    if(channel){
-      //Need to remove it from array, to place it on top
-      const index = channels.indexOf(channel)
-      channels.splice(index,1)
-    }
-    else{
-      //Create channel structure
-      channel = {name:newEvent.channelName,id:newEvent.channel,events:[]}
-    }
-    channel.events.unshift(newEvent)
-    return [channel, ...channels]
-  }, [])
-
-
   //Connect to a Chat Websocket
   useEffect(()=>{
 
@@ -38,11 +16,7 @@ export default ({id,token},callback) => {
       if(error){
         return
       }
-      if(data.user){
-        addEvent(data.user)
-        addToChannel(data.user)
-        callback(data.user)
-      }
+      callback(data.user)
     }
 
     //Prepare query/variables
@@ -110,6 +84,4 @@ export default ({id,token},callback) => {
     return () => webSocket.close()
     
   },[id,token,callback])
-
-  return {events,channels}
 }

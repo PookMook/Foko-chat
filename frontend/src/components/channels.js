@@ -16,7 +16,6 @@ export default (props) => {
         </article>
       </Link>
       {state.channels.map(c=><ChannelOV key={`channel-${c.id}`} {...c}/>)}
-      {props.channels.map(c=><Channel key={`channel-${c.id}`} event={c.events[0]}/>)}
     </aside>
   )
 }

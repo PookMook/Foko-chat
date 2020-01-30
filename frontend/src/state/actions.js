@@ -2,6 +2,7 @@ import {authForm,user} from './state'
 
 const channels = () => ([])
 const channelsById = () => new Map()
+const events = () => ([])
 
 export default {
 
@@ -34,6 +35,7 @@ export default {
     state.user = authType
     state.channels = channels()
     state.channelsById = channelsById()
+    state.events = events()
   },
 
 
@@ -59,6 +61,7 @@ export default {
     state.user = authType
     state.channels = channels()
     state.channelsById = channelsById()
+    state.events = events()
   },
 
 
@@ -89,7 +92,7 @@ export default {
     if(channel){
       //Need to remove it from array, to place it on top
       const index = state.channels.indexOf(channel)
-      channels.splice(index,1)
+      state.channels.splice(index,1)
     }
     else{
       //Create channel structure
@@ -98,6 +101,7 @@ export default {
     }
     channel.events.unshift(event)
     state.channels = [channel, ...state.channels]
+    state.events.push(event)
   }
 
 }

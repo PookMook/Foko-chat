@@ -11,5 +11,6 @@ export default {
   authForm:JSON.parse(authForm),
   user:null,
   channels:null,
-  channelsById:null
+  channelsById:null,
+  events:null
 }

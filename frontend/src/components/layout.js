@@ -21,18 +21,18 @@ function Layout() {
 
   const {state,actions} = useOvermind()
   const callback = useCallback((event)=>{actions.handleEvent(event)},[])
-  const {events,channels} = useSubscription(state.user,callback)
+  useSubscription(state.user,callback)
 
   return (
     <Router>
       <Header/>
-      <LastMessages events={events}/>
-      <Channels channels={channels}/>
+      <LastMessages/>
+      <Channels />
       <Switch>
         <Route exact path="/">
           <NewChannel />
         </Route>
-        <Route path="/channel/:id" render={(props)=><Chat {...props} channels={channels}/>}/>
+        <Route path="/channel/:id" component={Chat}/>
         <Route component={NoMatch} />
       </Switch>
     </Router>
