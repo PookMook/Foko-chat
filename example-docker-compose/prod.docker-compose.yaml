@@ -13,7 +13,7 @@ services:
   graphql:
     build: 
       context : ./
-      dockerfile: backend-dev
+      dockerfile: backend-prod
     container_name: "chat-graphql"
     volumes:
       - ./backend/:/usr/src/app
@@ -26,7 +26,7 @@ services:
       - MONGO_SERVER_DB=chat
       - HTTPS=false
       - JWT_SECRET_TOKEN=SuperSecureButYouShouldChangeMe
-      - ALLOW_CORS_FRONTEND=http://localhost:7070
+      - ALLOW_CORS_FRONTEND=front.arthurdev.duckdns.org
       - VIRTUAL_HOST=graphql.arthurdev.duckdns.org
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=4000
@@ -35,7 +35,7 @@ services:
   front:
     build: 
       context: ./
-      dockerfile: frontend-dev
+      dockerfile: frontend-prod
     container_name: "chat-front"
     volumes:
       - ./frontend/:/usr/src/app
@@ -43,8 +43,8 @@ services:
     depends_on:
       - graphql
     environment:
-      - REACT_APP_BACKEND=localhost:7071
-      - REACT_APP_PROTOCOL=http
+      - REACT_APP_BACKEND=graphql.arthurdev.duckdns.org
+      - REACT_APP_PROTOCOL=https
       - VIRTUAL_HOST=front.arthurdev.duckdns.org
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=3000
