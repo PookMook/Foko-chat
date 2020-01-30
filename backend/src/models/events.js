@@ -19,5 +19,5 @@ const eventSchema = new Schema({
         ref: 'User'
       }
     ]
-})
+},{timestamps:true})
 module.exports = mongoose.model('Event', eventSchema)

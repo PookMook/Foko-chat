@@ -25,7 +25,7 @@ const init = async () => {
   const channels = await mongo.Channels.find()
   //Populate in memory the last event of each channel
   for(const channel of channels){
-    await channel.populate('events',{options:{limit:1,sort:{createdAt:-1}}}).execPopulate()
+    await channel.populate({path:'events',options:{limit:1,sort:{createdAt:-1}}}).execPopulate()
   }
 
   const filteredChannels = channels.map(c=>({
@@ -36,6 +36,12 @@ const init = async () => {
   for(let i=0;i<filteredChannels.length;i++){
     console.log("loading: ",filteredChannels[i].name)
     const participants = filteredChannels[i].participants
+
+    //inject author into the loaded event, need to recreate the event object
+    const author = memory.users.get(filteredChannels[i].events[0].author.toString())
+    const event = {author,type:filteredChannels[i].events[0].type,message:filteredChannels[i].events[0].message}
+    filteredChannels[i].events = [event]
+
     filteredChannels[i].users = new Set()
     for(let o=0;o<participants.length;o++){
       const user = memory.users.get(participants[o].toString())
@@ -141,6 +147,17 @@ module.exports = {
     return payload
 
   },
+
+  addEvent: (event) => {
+    //Save event + update channel in mongo
+    mongo.Events.create(event)
+    .then(event => {
+      mongo.Channels.update(
+        { _id: event._doc.channel }, 
+        { $push: { events: event.id } })
+        .then(res=>console.log("updating channel",res)) 
+    })
+  }
 
 
 }
