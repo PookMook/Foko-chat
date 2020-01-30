@@ -157,6 +157,12 @@ module.exports = {
         { $push: { events: event.id } })
         .then(res=>console.log("updating channel",res)) 
     })
+  },
+
+  loadChannel: async (id) => {
+    //return mongo.Channels.findOne({id})
+    const channel = await mongo.Channels.findOne({_id:id}).populate({path: 'events',populate: {path: 'author', model: 'User' }})
+    return channel
   }
 
 

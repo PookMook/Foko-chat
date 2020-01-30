@@ -1,7 +1,7 @@
 module.exports = `
 type Query {
-  hello(name: String): String!
   fetchChannels(id:ID!,token:String!):[Channel!]!
+  loadChannel(channel:ID!,id:ID!,token:String!):Channel!
 }
 type Mutation{
   sendMessage(channel:ID!,message:String!,id:ID!,token:String!):Event!
