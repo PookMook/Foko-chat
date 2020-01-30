@@ -12,12 +12,11 @@ module.exports = {
     loadChannel:async (_, args)=> {
       const verif = veryfy(args.token,args.id)
       const channel = models.getChannel(args.channel)
-      if(!channel.participants.includes(verif.id)){
+      if(!channel.users.has(models.getUser(verif.id))){
         throw new Error('You need to be a participant')
       }
       //fetch Channel from Mongo
       const fetchedChannel = await models.loadChannel(args.channel)
-      console.log("loading",fetchedChannel)
       return {id:fetchedChannel._id, name:fetchedChannel.name, events:fetchedChannel.events}
     }
   },

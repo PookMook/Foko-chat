@@ -91,11 +91,31 @@ export default {
     .then(response=>{
       const channels = response.fetchChannels
       for(let i=0;i<channels.length;i++){
-        //Populate empty events
-        //channels[i].events = []
-        state.channelsById.set(channels[i].id,channels[i])
+        //If channel already exist, leave it be
+        if(!state.channelsById.has(channels[i].id)){
+          state.channelsById.set(channels[i].id,channels[i])
+        }
       }
       state.channels = [...channels,...state.channels]
+      state.load += 1
+    })
+  },
+  loadChannel: ({state,effects},id)=> {
+    effects.loadChannel({channel:id,id:state.user.id,token:state.user.token})
+    .then(response=>{
+      console.log(response.loadChannel)
+      const loadedChannel = response.loadChannel
+      //GraphQL send all in order
+      loadedChannel.events = loadedChannel.events.reverse()
+      //Replace state.channel
+      const channel = state.channelsById.get(loadedChannel.id)
+      if(channel){
+        channel.events = loadedChannel.events
+      }
+      else{
+        state.channelsById.set(loadedChannel.id,loadedChannel)
+        state.channels = [loadedChannel,...state.channels]
+      }
       state.load += 1
     })
   },

@@ -1,11 +1,9 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 
 import styles from './chat.module.scss'
 import { useOvermind } from '../state/index';
 
 export default (props) => {
-
-  console.log("render chat")
   const {state,actions} = useOvermind()
   const [input,setInput] = useState("")
   const { match: { params } } = props;
@@ -14,6 +12,9 @@ export default (props) => {
     actions.sendMessage({channel:params.id,message:input})
     setInput("")
   }
+  useEffect(()=>{
+    actions.loadChannel(params.id)
+  },[params.id,actions.loadChannel])
   console.log("auto-reload",state.load)
 
   return(

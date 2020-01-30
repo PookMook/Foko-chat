@@ -95,6 +95,25 @@ export default {
       variables:args
     }
     return askGraphQL(payload)
+  },
+  loadChannel: (args) => {
+    const payload = {
+      query:`query($channel:ID!,$id:ID!,$token:String!){
+  loadChannel(channel:$channel,id:$id,token:$token){
+    id
+    name
+    events{
+      id
+      message
+      author{
+        username
+      }
+    }
+  }
+}`,
+      variables:args
+    }
+    return askGraphQL(payload)
   }
 
 }

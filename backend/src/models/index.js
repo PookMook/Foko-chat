@@ -38,9 +38,11 @@ const init = async () => {
     const participants = filteredChannels[i].participants
 
     //inject author into the loaded event, need to recreate the event object
-    const author = memory.users.get(filteredChannels[i].events[0].author.toString())
-    const event = {author,type:filteredChannels[i].events[0].type,message:filteredChannels[i].events[0].message}
-    filteredChannels[i].events = [event]
+    if(filteredChannels[i].events[0]){
+      const author = memory.users.get(filteredChannels[i].events[0].author.toString())
+      const event = {author,type:filteredChannels[i].events[0].type,message:filteredChannels[i].events[0].message}
+      filteredChannels[i].events = [event]
+    }
 
     filteredChannels[i].users = new Set()
     for(let o=0;o<participants.length;o++){
@@ -133,14 +135,14 @@ module.exports = {
     const payload = {
       id:createdChannel.id,
       name:createdChannel._doc.name,
+      users: new Set()
     }
     memory.channels.set(createdChannel.id,payload)
     //Add Users to channel, and channel to Users
-    payload.users=sortedParticipants.map(p=>{
+    sortedParticipants.forEach(p=>{
       const user = memory.users.get(p)
-      console.log("Adding channels to user: ",user)
       user.channels.add(payload)
-      return user
+      payload.users.add(user)
     })
     
 
