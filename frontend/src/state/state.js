@@ -6,11 +6,12 @@ export const authForm = JSON.stringify({
   username:""
 })
 export const user = null
-
-export default {
+export const defaultState = JSON.stringify({
   authForm:JSON.parse(authForm),
   user:null,
   channels:null,
   channelsById:null,
   events:null
-}
+})
+
+export default JSON.parse(defaultState)

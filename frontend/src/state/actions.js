@@ -1,4 +1,4 @@
-import {authForm,user} from './state'
+import {authForm,defaultState} from './state'
 
 const channels = () => ([])
 const channelsById = () => new Map()
@@ -67,8 +67,8 @@ export default {
 
   //SignOut
   signout:({state}) => {
-    //Wipe state.user
-    state.user = user
+    //Wipe state
+    state = JSON.parse(defaultState)
   },
 
 
