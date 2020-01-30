@@ -26,7 +26,7 @@ services:
       - MONGO_SERVER_DB=chat
       - HTTPS=false
       - JWT_SECRET_TOKEN=SuperSecureButYouShouldChangeMe
-      - ALLOW_CORS_FRONTEND=front.arthurdev.duckdns.org
+      - "ALLOW_CORS_FRONTEND=https://front.arthurdev.duckdns.org"
       - VIRTUAL_HOST=graphql.arthurdev.duckdns.org
       - VIRTUAL_NETWORK=nginx-proxy
       - VIRTUAL_PORT=4000
