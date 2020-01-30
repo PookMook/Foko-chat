@@ -1,4 +1,4 @@
-import React,{useCallback} from 'react';
+import React,{useCallback, useEffect} from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,8 +20,11 @@ import './layout.scss';
 function Layout() {
 
   const {state,actions} = useOvermind()
-  const callback = useCallback((event)=>{actions.handleEvent(event)},[])
+  const callback = useCallback((event)=>{actions.handleEvent(event)},[actions])
   useSubscription(state.user,callback)
+  useEffect(()=>{
+    actions.fetchChannels()
+  },[actions])
 
   return (
     <Router>

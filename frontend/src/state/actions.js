@@ -79,9 +79,23 @@ export default {
   createChannel: ({state,effects},name)=>{
     effects.createChannel({name,participants:[],id:state.user.id,token:state.user.token}).then(response=>{
       const newChannel = response.createChannel
-      console.log(newChannel)
+      newChannel.events = []
       state.channels.unshift(newChannel)
       state.channelsById.set(newChannel.id,newChannel)
+    })
+  },
+
+  //Init
+  fetchChannels: ({state,effects}) => {
+    effects.fetchChannels({id:state.user.id,token:state.user.token})
+    .then(response=>{
+      const channels = response.fetchChannels
+      for(let i=0;i<channels.length;i++){
+        //Populate empty events
+        channels[i].events = []
+        state.channelsById.set(channels[i].id,channels[i])
+      }
+      state.channels = [...channels,...state.channels]
     })
   },
 

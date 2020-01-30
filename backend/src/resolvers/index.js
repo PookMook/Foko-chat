@@ -5,6 +5,11 @@ const veryfy = require('../helpers/jwtVerify')
 module.exports = {
   Query: {
     hello: (_, { name }) => `Hello ${name || 'World'}`,
+    fetchChannels: (_, {id,token}) => {
+      const verif = veryfy(token,id)
+      const payload = models.fetchChannels(verif.id)
+      return payload
+    }
   },
   Mutation:{
     sendMessage: (_, {channel,message,id,token},{pubsub}) => {

@@ -46,6 +46,7 @@ export default {
           selectChannel:null,
           createChannel:null,
           handleEvent:null,
+          fetchChannels:null,
         }
       },
       ERROR_LOGIN:{

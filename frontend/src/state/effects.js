@@ -76,6 +76,19 @@ export default {
       variables:args
     }
     return askGraphQL(payload)
+  },
+
+  fetchChannels: (args) => {
+    const payload = {
+      query:`query($id:ID!,$token:String!){
+  fetchChannels(id:$id,token:$token){
+    id
+    name
+  }
+}`,
+      variables:args
+    }
+    return askGraphQL(payload)
   }
 
 }

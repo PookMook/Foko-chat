@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 import styles from './channel.module.css'
-import Channel from './channel'
 import ChannelOV from './channelOV'
 import { useOvermind } from '../state'
 

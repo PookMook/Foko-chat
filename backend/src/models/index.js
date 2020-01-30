@@ -55,6 +55,9 @@ module.exports = {
   getUser:(id)=>{
     return memory.users.get(id)
   },
+  fetchChannels:(id)=>{
+    return [...memory.users.get(id).channels]
+  },
 
   //mix Memory + mongo
   register:async ({email,password,username})=> {
@@ -75,7 +78,7 @@ module.exports = {
       id:createdUser.id,
       email,
       username,
-      channels:[]
+      channels:new Set()
     }
     memory.users.set(createdUser.id,payload)
 
@@ -124,6 +127,7 @@ module.exports = {
     //Add Users to channel, and channel to Users
     payload.users=sortedParticipants.map(p=>{
       const user = memory.users.get(p)
+      console.log("Adding channels to user: ",user)
       user.channels.add(payload)
       return user
     })
