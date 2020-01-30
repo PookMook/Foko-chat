@@ -45,9 +45,10 @@ services:
     environment:
       - REACT_APP_BACKEND=graphql.arthurdev.duckdns.org
       - REACT_APP_PROTOCOL=https
+      - REACT_APP_SOCKET_PROTOCOL=wss
       - VIRTUAL_HOST=front.arthurdev.duckdns.org
       - VIRTUAL_NETWORK=nginx-proxy
-      - VIRTUAL_PORT=3000
+      - VIRTUAL_PORT=80
       - LETSENCRYPT_HOST=front.arthurdev.duckdns.org
       - LETSENCRYPT_EMAIL=arthur.juchereau@gmail.com
 
