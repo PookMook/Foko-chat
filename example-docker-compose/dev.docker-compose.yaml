@@ -51,7 +51,8 @@ services:
     depends_on:
       - graphql
     environment:
-      - "REACT_APP_BACKEND=localhost:3080"
+      - REACT_APP_BACKEND=localhost:3080
+      - REACT_APP_PROTOCOL=http
 
 networks:
   default:
