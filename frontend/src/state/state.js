@@ -9,5 +9,7 @@ export const user = null
 
 export default {
   authForm:JSON.parse(authForm),
-  user:null
+  user:null,
+  channels:null,
+  channelsById:null
 }

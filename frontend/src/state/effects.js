@@ -64,6 +64,18 @@ export default {
       variables:args
     }
       askGraphQL(payload)
+  },
+  createChannel: (args) => {
+    const payload = {
+      query:`mutation($name:String,$id:ID!,$token:String!){
+  createChannel(name:$name,participants:[],id:$id,token:$token){
+    id
+    name
+  }
+}`,
+      variables:args
+    }
+    return askGraphQL(payload)
   }
 
 }

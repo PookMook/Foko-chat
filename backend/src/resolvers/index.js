@@ -27,7 +27,7 @@ module.exports = {
     //changePassword
     createChannel: async (_, args) => {
       const token = veryfy(args.token,args.id)
-      const payload = models.createChannel({...args,participants:[...args.participants, token.id]})
+      const payload = await models.createChannel({name:args.name,participants:[...args.participants, token.id]})
       return payload
     }
     //LoadChannels

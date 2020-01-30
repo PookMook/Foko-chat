@@ -18,7 +18,7 @@ export default (props) => {
     <main className={styles.chat}>
       <header>Channel: {params.id}</header>
       <section>
-        {thisChannel.events.map(e=><p key={e.id}>{e.author.username} > {e.message}</p>)}
+        {thisChannel.events.map(e=><pre key={e.id}>{e.author.username} > {e.message}</pre>)}
       </section>
       <textarea value={input} onChange={e=>setInput(e.target.value)}></textarea>
       <button onClick={()=>handleSend()}>Send</button>

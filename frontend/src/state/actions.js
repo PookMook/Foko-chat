@@ -1,5 +1,8 @@
 import {authForm,user} from './state'
 
+const channels = () => ([])
+const channelsById = () => new Map()
+
 export default {
 
   //Form
@@ -29,6 +32,8 @@ export default {
 
     //Populate 
     state.user = authType
+    state.channels = channels()
+    state.channelsById = channelsById()
   },
 
 
@@ -52,6 +57,8 @@ export default {
 
     //Populate 
     state.user = authType
+    state.channels = channels()
+    state.channelsById = channelsById()
   },
 
 
@@ -66,5 +73,13 @@ export default {
   sendMessage: ({state,effects},args)=> {
     effects.sendMessage({...args,id:state.user.id,token:state.user.token})
 
+  },
+  createChannel: ({state,effects},name)=>{
+    effects.createChannel({name,participants:[],id:state.user.id,token:state.user.token}).then(response=>{
+      const newChannel = response.createChannel
+      console.log(newChannel)
+      state.channels.unshift(newChannel)
+      state.channelsById.set(newChannel.id,newChannel)
+    })
   }
 }

@@ -38,9 +38,11 @@ export default ({id,token},callback) => {
       if(error){
         return
       }
-      addEvent(data.user)
-      addToChannel(data.user)
-      callback(data.user)
+      if(data.user){
+        addEvent(data.user)
+        addToChannel(data.user)
+        callback(data.user)
+      }
     }
 
     //Prepare query/variables

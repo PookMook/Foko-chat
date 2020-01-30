@@ -7,9 +7,7 @@ module.exports = {
   if(targetChannel){
 
       //populate Author
-      console.log(event.author)
       event.author = models.getUser(event.author)
-
 
       //Dispatch to Each User
       const participants = targetChannel.users

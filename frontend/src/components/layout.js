@@ -13,6 +13,7 @@ import LastMessages from './lastMessages'
 import NoMatch from './noMatch'
 import Channels from './channels'
 import Chat from './chat'
+import NewChannel from './newChannel'
 
 import './layout.scss';
 
@@ -29,7 +30,7 @@ function Layout() {
       <Channels channels={channels}/>
       <Switch>
         <Route exact path="/">
-          <p>Home</p>
+          <NewChannel />
         </Route>
         <Route path="/channel/:id" render={(props)=><Chat {...props} channels={channels}/>}/>
         <Route component={NoMatch} />
