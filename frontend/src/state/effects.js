@@ -84,6 +84,12 @@ export default {
   fetchChannels(id:$id,token:$token){
     id
     name
+    events{
+      message
+      author{
+        username
+      }
+    }
   }
 }`,
       variables:args

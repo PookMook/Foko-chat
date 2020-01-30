@@ -23,6 +23,11 @@ const init = async () => {
   console.log("Loading Channels")
   
   const channels = await mongo.Channels.find()
+  //Populate in memory the last event of each channel
+  for(const channel of channels){
+    await channel.populate('events',{options:{limit:1,sort:{createdAt:-1}}}).execPopulate()
+  }
+
   const filteredChannels = channels.map(c=>({
     ...c._doc,
     id:c.id

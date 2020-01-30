@@ -92,10 +92,11 @@ export default {
       const channels = response.fetchChannels
       for(let i=0;i<channels.length;i++){
         //Populate empty events
-        channels[i].events = []
+        //channels[i].events = []
         state.channelsById.set(channels[i].id,channels[i])
       }
       state.channels = [...channels,...state.channels]
+      state.load += 1
     })
   },
 

@@ -13,6 +13,7 @@ type Mutation{
 type Channel {
   id:ID!
   name:String
+  events:[Event!]!
 }
 
 type Auth {

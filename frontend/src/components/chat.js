@@ -5,18 +5,20 @@ import { useOvermind } from '../state/index';
 
 export default (props) => {
 
+  console.log("render chat")
   const {state,actions} = useOvermind()
   const [input,setInput] = useState("")
   const { match: { params } } = props;
-  const thisChannel = state.channelsById.get(params.id) || {name:"Not found", events:[]}
-  const handleSend= () => {
+  const thisChannel = state.channelsById.get(params.id) || {name:"Not found or loading", events:[]}
+  const handleSend = () => {
     actions.sendMessage({channel:params.id,message:input})
     setInput("")
   }
+  console.log("auto-reload",state.load)
 
   return(
     <main className={styles.chat}>
-      <header>Channel: {params.id} / {thisChannel.name}</header>
+      <header>Channel: {thisChannel.name}</header>
       <section>
         {thisChannel.events.map(e=><pre key={e.id}>{e.author.username} > {e.message}</pre>)}
       </section>
