@@ -13,8 +13,9 @@ function App() {
   const isLoggedIn = state.matches({login:{SUCCESS:true}})
   const isRecover = state.matches({login:{RECOVER_PASSWORD:true}})
   const isRecovering = state.matches({login:{RECOVERING:true}})
+  const isSendingRecover = state.matches({login:{SENDING_RECOVER:true}})
   const isInvited = state.matches({login:{INVITED:true}})
-  const isLogining = !(isLoggedIn || isRecovering || isInvited || isRecover)
+  const isLogining = !(isLoggedIn || isRecovering || isInvited || isRecover || isSendingRecover)
 
   useEffect(()=>{
     //Recovery/invite are not the main driver here so can be second-class citizen (aka reprint from the login form)
@@ -35,6 +36,7 @@ function App() {
       {isLoggedIn && <Layout />}
       {isRecover && <RecoverPassword />}
       {isRecovering && <RecoveringPassword />}
+      {isSendingRecover && <RecoveringPassword/>}
       {isLogining && <Login />}
     </>
   );

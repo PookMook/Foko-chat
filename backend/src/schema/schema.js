@@ -8,6 +8,13 @@ type Mutation{
   login(email:String!,password:String!):Auth!
   register(email:String!,password:String!,username:String!):Auth!
   createChannel(name:String,participants:[ID!], id:ID!, token:String!): Channel!
+
+  recoverPassword(email:String):System
+  testRecover(token:String!,password:String!):Auth!
+}
+
+type System {
+  confirm:Boolean
 }
 
 type Channel {

@@ -122,6 +122,34 @@ module.exports = {
   },
 
   //Full mongo
+  testRecoverPassword: async ({token,password}) => {
+    //test token exp+validity
+    const verif = jwt.verify(token,process.env.JWT_SECRET_TOKEN)
+    console.log(verif)
+
+    //Check if email not already in
+    const fetchedUser = await mongo.Users.findOne({_id:verif.id})
+    if(!fetchedUser){
+      throw new Error('Unknown user')
+    }
+
+    //generate hash of the password
+    const passwordHash = bcrypt.hashSync(password,10)
+
+    //Update user for next logins
+    fetchedUser.password = passwordHash
+    fetchedUser.save()
+
+    //return Auth payload
+    const payload = {
+      id:fetchedUser.id,
+      email:fetchedUser._doc.email,
+      username:fetchedUser._doc.username,
+      channels:new Set()
+    }
+
+    return {...payload,token:jwt.sign(payload,process.env.JWT_SECRET_TOKEN)}
+  },
   createChannel: async ({name,participants}) => {
     //Search if channel doesn't already exists
     const sortedParticipants = participants.sort(sortIDs)
@@ -165,6 +193,15 @@ module.exports = {
     //return mongo.Channels.findOne({id})
     const channel = await mongo.Channels.findOne({_id:id}).populate({path: 'events',populate: {path: 'author', model: 'User' }})
     return channel
+  },
+
+  findUserByEmail: async (email) => {
+    const fetchedUser = await mongo.Users.findOne({email})
+    if(!fetchedUser){
+      //early return
+      return false
+    }
+    return fetchedUser
   }
 
 

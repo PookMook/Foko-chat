@@ -16,7 +16,7 @@ const askGraphQL = (payload) => {
   })
   .then(json=>{
     if(json.errors){
-      throw new Error(json.map(e=>e.message).join(', '))
+      throw new Error(json.errors.map(e=>e.message).join(', '))
     }
     return json.data
   })
@@ -62,6 +62,18 @@ export default {
 }
 `,
       variables:{email}
+    }
+    return askGraphQL(payload)
+  },
+  testRecover: (args)=> {
+    const payload = {
+      query:`mutation($token:String!,$password:String!){
+  testRecover(token:$token,password:$password){
+    ${authType}
+  }
+}
+`,
+      variables:args
     }
     return askGraphQL(payload)
   },

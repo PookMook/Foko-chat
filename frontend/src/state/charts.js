@@ -57,6 +57,10 @@ export default {
         }
       },
       SENDING_RECOVER:{
+        on:{
+          successRecover:'SUCCESS',
+          failRecover:'RECOVERING'
+        }
 
       },
       LOGIN:{

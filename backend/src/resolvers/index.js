@@ -43,8 +43,22 @@ module.exports = {
       const token = veryfy(args.token,args.id)
       const payload = await models.createChannel({name:args.name,participants:[...args.participants, token.id]})
       return payload
+    },
+    recoverPassword: async (_, {email}) => {
+      //Find if user exists
+      const foundUser = await models.findUserByEmail(email)
+      if(!foundUser){
+        return {confirm:false}
+      }
+
+      //User exists, trigger sendEmail
+      effects.recoverPassword({to:email,username:foundUser._doc.username,id:foundUser.id})
+      return {confirm:true}
+    },
+    testRecover: async (_, args) =>{
+      // TODO Need to verify the args.token
+      return await models.testRecoverPassword(args)
     }
-    //LoadChannels
   },
   Subscription: {
     user: {

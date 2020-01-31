@@ -1,6 +1,8 @@
 const models = require('../models/index')
+const mail = require('./mail')
 
 module.exports = {
+  ...mail,
   messageToUser: (event,pubsub) => {
 
 

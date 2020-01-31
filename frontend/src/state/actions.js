@@ -82,6 +82,8 @@ export default {
   sendRecover:({state,effects})=> {
     //Effect send email here, we don't care about the callback
     effects.recoverPassword(state.recover.email)
+    //add modal to the state
+    state.modal = {token:"",password:"",passwordConfirm:""}
 
   },
   recovering:({state},token) => {
@@ -91,11 +93,32 @@ export default {
     state.modal[target] = value
   },
   cancelRecover: ({state})=>{
-    state = defaultState
+    state = JSON.parse(defaultState)
   },
-  testRecover: ({state})=> {
+  testRecover: ({actions,state,effects})=> {
+    // TODO add Effect
+    effects.testRecover({token:state.modal.token,password:state.modal.password})
+    .then(response=>{
+      console.log(response)
+      actions.successRecover(response.testRecover)
+    })
+    .catch(err=>{
+      alert(err)
+      actions.failRecover()
+    })
 
   },
+  successRecover:({state},authType)=>{
+    //Wipe state.authForm
+    state.authForm = JSON.parse(authForm)
+
+    //Populate 
+    state.user = authType
+    state.channels = channels()
+    state.channelsById = channelsById()
+    state.events = events()
+  },
+  failRecover:()=>{},
 
 
   //Channel management
