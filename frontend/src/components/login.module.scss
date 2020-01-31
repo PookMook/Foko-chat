@@ -9,7 +9,7 @@
   display:grid;
   grid-template-columns: 1fr auto;
   grid-auto-rows: auto;
-  > h1, > h2, > input{
+  > h1, > h2, > input, > textarea{
     margin:0 0 0.5rem 0;
     grid-column: 1 / -1;
   }
@@ -19,5 +19,12 @@
   > button {
     grid-column-end: -1;
     text-align: center;
+  }
+  > p {
+    user-select: none;
+    >span {
+      color:#f0f0f0;
+      cursor: pointer;
+    }
   }
 }

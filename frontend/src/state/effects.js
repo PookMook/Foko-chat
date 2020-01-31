@@ -53,6 +53,18 @@ export default {
     }
     return askGraphQL(payload)
   },
+  recoverPassword: (email)=> {
+    const payload = {
+      query:`mutation($email:String!){
+  recoverPassword(email:$email){
+    confirm
+  }
+}
+`,
+      variables:{email}
+    }
+    return askGraphQL(payload)
+  },
 
   sendMessage: (args) => {
     const payload = {

@@ -72,6 +72,32 @@ export default {
   },
 
 
+  //Recover Password
+  recoverPassword:({state})=>{
+    state.recover = {email:""}
+  },
+  filloutRecover:({state},{target,value})=>{
+    state.recover[target] = value
+  },
+  sendRecover:({state,effects})=> {
+    //Effect send email here, we don't care about the callback
+    effects.recoverPassword(state.recover.email)
+
+  },
+  recovering:({state},token) => {
+    state.modal = {token,password:"",passwordConfirm:""}
+  },
+  filloutRecovering:({state},{target,value}) => {
+    state.modal[target] = value
+  },
+  cancelRecover: ({state})=>{
+    state = defaultState
+  },
+  testRecover: ({state})=> {
+
+  },
+
+
   //Channel management
   sendMessage: ({state,effects},args)=> {
     effects.sendMessage({...args,id:state.user.id,token:state.user.token})

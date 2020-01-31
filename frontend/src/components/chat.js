@@ -14,7 +14,7 @@ export default (props) => {
   }
   useEffect(()=>{
     actions.loadChannel(params.id)
-  },[params.id,actions.loadChannel])
+  },[params.id,actions])
   console.log("auto-reload",state.load)
 
   return(

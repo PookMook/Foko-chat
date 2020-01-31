@@ -4,6 +4,7 @@
   "description": "backend",
   "main": "src/app.js",
   "dependencies": {
+    "@sendgrid/mail": "^6.5.1",
     "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",

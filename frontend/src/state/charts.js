@@ -24,8 +24,40 @@ export default {
               && state.authForm.username !== ""
             )
           },
-          fillout:null
+          fillout:null,
+          recoverPassword:'RECOVER_PASSWORD',
+          recovering:'RECOVERING'
         }
+      },
+      RECOVER_PASSWORD:{
+        on:{
+          cancelRecover:'UNAUTH',
+          filloutRecover:null,
+          sendRecover:{
+            target:'RECOVERING',
+            condition:state=>Boolean(
+              state.recover.email !== "" 
+              && isEmail(state.recover.email)
+            )
+          }
+        }
+      },
+      RECOVERING:{
+        on:{
+          cancelRecover:'UNAUTH',
+          filloutRecovering:null,
+          testRecover:{
+            target:'SENDING_RECOVER',
+            condition: state => Boolean(
+              state.modal.token !== ""
+              && state.modal.password !== ""
+              && state.modal.password === state.modal.passwordConfirm
+            )
+          }
+        }
+      },
+      SENDING_RECOVER:{
+
       },
       LOGIN:{
         on:{

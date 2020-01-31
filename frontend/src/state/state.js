@@ -12,7 +12,8 @@ export const defaultState = JSON.stringify({
   channels:null,
   channelsById:null,
   events:null,
-  load:0
+  load:0,
+  modal:null
 })
 
 export default JSON.parse(defaultState)

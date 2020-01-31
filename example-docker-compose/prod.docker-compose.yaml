@@ -32,6 +32,7 @@ services:
       - VIRTUAL_PORT=4000
       - LETSENCRYPT_HOST=graphql.arthurdev.duckdns.org
       - LETSENCRYPT_EMAIL=arthur.juchereau@gmail.com
+      - SENDGRID_API_KEY=SG.SENDGRIDKEY.YouShouldAddYoursForEmailToWork
   front:
     build: 
       context: ./

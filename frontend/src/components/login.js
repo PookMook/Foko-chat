@@ -26,6 +26,7 @@ export default () => {
       <input type="password" placeholder="Confirm password" value={state.authForm.passwordConfirm} onChange={e=>actions.fillout({target:"passwordConfirm",value:e.target.value})} />
       <input placeholder="Username" value={state.authForm.username} onChange={e=>actions.fillout({target:"username",value:e.target.value})} />
       <button className={state.actions.register?"primary":null} disabled={!state.actions.register} onClick={()=>actions.register()}>{sending?'Sending...':error?'Error':'Register'}</button>
+      <p><span onClick={()=>actions.recoverPassword()}>or recover password</span></p>
     </main>
   )
 }
