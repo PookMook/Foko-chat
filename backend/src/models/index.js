@@ -3,8 +3,10 @@ const jwt = require('jsonwebtoken');
 
 const memory = require('./memory')
 const mongo = require('./mongo')
+const effects = require('../effects/index')
 
 const sortIDs = require('../helpers/sortIDs')
+const isEmail = require('../helpers/isEmail')
 
 
 
@@ -177,15 +179,82 @@ module.exports = {
     return payload
 
   },
+  inviteToChannel: async ({channel,email,author,pubsub})=> {
+    let error = ""
+    //test early throw
+    if(!isEmail(email)){
+      throw new Error('Not a correct email')
+    }
+    //If not author not in channel
+    const channelMemory = memory.channels.get(channel)
+    if(!channelMemory){
+      throw new Error('Channel unknown')
+    }
+    
+    //Author needs to be in channel
+    const authorMemory = memory.users.get(author)
+    if(!channelMemory.users.has(authorMemory)){
+      throw new Error('Inviter is not in the channel')
+    }
+
+    //Max 10 people per channel
+    if(channelMemory.users.size > 9){
+      throw new Error('Max user for channel reached')
+    }
+
+
+    let fetchedUser = await mongo.Users.findOne({email})
+    if(!fetchedUser){
+      //Create user
+      const username = email.split('@')[0]
+      fetchedUser = await mongo.Users.create({email,password:"",username})
+
+      //add to memory
+      const payload = {
+        id:fetchedUser.id,
+        email,
+        username,
+        channels:new Set()
+      }
+      memory.users.set(fetchedUser.id,payload)
+    }
+
+    //add to chat on mongo
+    
+    //add to chat in memory
+/*     sortedParticipants.forEach(p=>{
+      const user = memory.users.get(p)
+      user.channels.add(payload)
+      payload.users.add(user)
+    }) */
+    
+    //+ pubsub the join
+    const event = {
+      channel,
+      channelName:channelMemory.name,
+      type:"join",
+      message:`invited ${fetchedUser._doc.username} to join the channel`,
+      author:author
+    }
+    console.log(event)
+
+
+    //Send email invitation
+
+
+
+    return {confirm:false, message:error,event}
+  },
 
   addEvent: (event) => {
     //Save event + update channel in mongo
-    mongo.Events.create(event)
+    return mongo.Events.create(event)
     .then(event => {
       mongo.Channels.update(
         { _id: event._doc.channel }, 
         { $push: { events: event.id } })
-        .then(res=>console.log("updating channel",res)) 
+        .then(res=>console.log("updating channel",res))
+        return event.id 
     })
   },
 

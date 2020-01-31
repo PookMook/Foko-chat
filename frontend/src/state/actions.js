@@ -133,6 +133,15 @@ export default {
       state.channelsById.set(newChannel.id,newChannel)
     })
   },
+  inviteToChannel: ({effects,state},args) => {
+    effects.inviteToChannel({...args,id:state.user.id,token:state.user.token})
+    .then(response=>{
+
+    })
+    .catch(err=>{
+      alert(err)
+    })
+  },
 
   //Init
   fetchChannels: ({state,effects}) => {

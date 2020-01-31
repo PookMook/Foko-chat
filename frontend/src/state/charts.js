@@ -83,7 +83,8 @@ export default {
           createChannel:null,
           handleEvent:null,
           fetchChannels:null,
-          loadChannel:null
+          loadChannel:null,
+          inviteToChannel:null,
         }
       },
       ERROR_LOGIN:{

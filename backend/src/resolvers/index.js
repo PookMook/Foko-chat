@@ -56,8 +56,13 @@ module.exports = {
       return {confirm:true}
     },
     testRecover: async (_, args) =>{
-      // TODO Need to verify the args.token
       return await models.testRecoverPassword(args)
+    },
+    inviteToChannel: async (_,args,{ pubsub }) => {
+      const token = veryfy(args.token,args.id)
+      const success = await models.inviteToChannel({channel:args.channel,email:args.email,author:token.id,pubsub})
+      effects.messageToUser(success.event,pubsub)
+      return success
     }
   },
   Subscription: {

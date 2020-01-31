@@ -20,7 +20,6 @@ import './layout.scss';
 function Layout() {
 
   const {state,actions} = useOvermind()
-  console.log(JSON.stringify(state,null,1))
   const callback = useCallback((event)=>{actions.handleEvent(event)},[actions])
   useSubscription(state.user,callback)
   useEffect(()=>{

@@ -9,12 +9,14 @@ type Mutation{
   register(email:String!,password:String!,username:String!):Auth!
   createChannel(name:String,participants:[ID!], id:ID!, token:String!): Channel!
 
-  recoverPassword(email:String):System
+  recoverPassword(email:String):System!
   testRecover(token:String!,password:String!):Auth!
+  inviteToChannel(email:String!,channel:ID!,id:ID!,token:String!):System!
 }
 
 type System {
   confirm:Boolean
+  message:String
 }
 
 type Channel {
@@ -30,7 +32,7 @@ type Auth {
 }
 type User {
   username:String
-  id:ID!
+  id:ID
 }
 
 type Event {
@@ -39,7 +41,7 @@ type Event {
   channelName:String
   type:String
   message:String
-  author:User!
+  author:User
 }
 
 type Subscription {

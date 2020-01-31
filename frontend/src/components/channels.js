@@ -14,7 +14,7 @@ export default (props) => {
           <h1>New conversation</h1>
         </article>
       </Link>
-      {state.channels.map(c=><ChannelOV key={`channel-${c.id}`} {...c}/>)}
+      {state.channels.map(c=><ChannelOV key={`channels-${c.id}`} {...c}/>)}
     </aside>
   )
 }

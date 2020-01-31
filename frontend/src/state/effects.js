@@ -138,6 +138,19 @@ export default {
       variables:args
     }
     return askGraphQL(payload)
+  },
+  inviteToChannel: (args) => {
+    const payload = {
+      query:`mutation($email:String!,$channel:ID!,$id:ID!,$token:String!){
+  inviteToChannel(email:$email,channel:$channel,id:$id,token:$token){
+    confirm
+  }
+}`,
+      variables:args
+    }
+    return askGraphQL(payload)
+
+
   }
 
 }
