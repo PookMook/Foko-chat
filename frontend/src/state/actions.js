@@ -155,8 +155,10 @@ export default {
         }
         else{
           //if Channel already exist, need to remove from array
+          console.log("removing ",channels[i].id)
           const index = state.channels.indexOf(state.channelsById.get(channels[i].id))
-          state.channels(index,1)
+          state.channels.splice(index,1)
+          channels.splice(i,1)
         }
       }
       state.channels = [...channels,...state.channels]
@@ -189,8 +191,10 @@ export default {
     let channel = state.channelsById.get(event.channel)
     if(channel){
       //Need to remove it from array, to place it on top
+      console.log("removing",channel)
       const index = state.channels.indexOf(channel)
       state.channels.splice(index,1)
+      console.log("channels",JSON.stringify(state.channels.length,null,1))
     }
     else{
       //Create channel structure

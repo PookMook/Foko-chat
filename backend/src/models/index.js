@@ -219,7 +219,13 @@ module.exports = {
       memory.users.set(fetchedUser.id,payload)
     }
 
-    //add to chat on mongo
+    // TODO uncomment when releasing throw if user already in the chat
+    /* if(channelMemory.users.has(memory.users.get(fetchedUser.id))){
+      throw new Error('User already in the chat')
+    } */
+
+    // TODO add to chat on mongo
+    mongo.Channels.updateOne({_id:channel},{ $addToSet: { participants:  fetchedUser.id} })
     
     //add to chat in memory
 /*     sortedParticipants.forEach(p=>{
@@ -236,10 +242,8 @@ module.exports = {
       message:`invited ${fetchedUser._doc.username} to join the channel`,
       author:author
     }
-    console.log(event)
 
-
-    //Send email invitation
+    // TODO Send email invitation
 
 
 

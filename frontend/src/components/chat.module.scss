@@ -18,6 +18,8 @@
     grid-area:chat;
     display:flex;
     flex-direction: column-reverse;
+    max-height: 70vh;
+    overflow: hidden;
     >pre {
       margin:0 0 0.5rem 0;
     }
