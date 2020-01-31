@@ -153,6 +153,11 @@ export default {
         if(!state.channelsById.has(channels[i].id)){
           state.channelsById.set(channels[i].id,channels[i])
         }
+        else{
+          //if Channel already exist, need to remove from array
+          const index = state.channels.indexOf(state.channelsById.get(channels[i].id))
+          state.channels(index,1)
+        }
       }
       state.channels = [...channels,...state.channels]
       state.load += 1
