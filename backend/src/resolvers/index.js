@@ -33,6 +33,10 @@ module.exports = {
         const payload = await models.login(args)
         return payload //{token,id,username}
     },
+    autoLog: async (_,args)=> {
+      const payload = await models.autoLog(args)
+      return payload //{token,id,username}
+    },
     register: async (_, args) => {
         const payload = await models.register(args)
         return payload //{token,id,username}

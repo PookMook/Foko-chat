@@ -38,6 +38,31 @@ export default {
     state.events = events()
   },
 
+  //AutoLog
+  autoLog: ({actions,effects},token) => {
+    effects.autoLog(token)
+    .then(response=>{
+      actions.successLog(response.autoLog)
+    })
+    .catch(error=>{
+      console.log("error",error)
+      actions.failLog()
+    })
+  },
+  successLog: ({state},authType) => {
+    //Wipe state.authForm
+    state.authForm = JSON.parse(authForm)
+
+    //Populate 
+    state.user = authType
+    state.channels = channels()
+    state.channelsById = channelsById()
+    state.events = events()
+
+  },
+  failLog: ({state})=> {
+  },
+
 
   //Register
   register:({state,actions,effects}) => {

@@ -26,7 +26,14 @@ export default {
           },
           fillout:null,
           recoverPassword:'RECOVER_PASSWORD',
-          recovering:'RECOVERING'
+          recovering:'RECOVERING',
+          autoLog:'AUTOLOG'
+        }
+      },
+      AUTOLOG:{
+        on:{
+          successLog:'SUCCESS',
+          failLog:'UNAUTH'
         }
       },
       RECOVER_PASSWORD:{

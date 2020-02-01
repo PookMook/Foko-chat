@@ -121,6 +121,25 @@ module.exports = {
     return {...payload,token:jwt.sign(payload,process.env.JWT_SECRET_TOKEN)}
 
   },
+  autoLog: async ({token}) => {
+    //Find user
+    const verif = jwt.verify(token,process.env.JWT_SECRET_TOKEN)
+    const fetchedUser = await mongo.Users.findOne({_id:verif.id})
+    if(!fetchedUser){
+      throw new Error('User not found')
+    }
+
+    //send token
+    const payload = {
+      id:fetchedUser.id,
+      email:fetchedUser._doc.email,
+      username:fetchedUser._doc.username,
+      channels:fetchedUser._doc.channels
+    }
+    
+    return {...payload,token:jwt.sign(payload,process.env.JWT_SECRET_TOKEN)}
+
+  },
 
   //Full mongo
   testRecoverPassword: async ({token,password}) => {

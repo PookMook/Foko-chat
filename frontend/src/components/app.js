@@ -6,6 +6,7 @@ import Login from './login'
 import Layout from './layout'
 import RecoveringPassword from './recoveringPassword'
 import RecoverPassword from './recoverPassword'
+import AutoLog from './autoLog'
 
 function App() {
 
@@ -15,7 +16,8 @@ function App() {
   const isRecovering = state.matches({login:{RECOVERING:true}})
   const isSendingRecover = state.matches({login:{SENDING_RECOVER:true}})
   const isInvited = state.matches({login:{INVITED:true}})
-  const isLogining = !(isLoggedIn || isRecovering || isInvited || isRecover || isSendingRecover)
+  const isAutoLoging = state.matches({login:{AUTOLOG:true}})
+  const isLogining = !(isLoggedIn || isRecovering || isInvited || isRecover || isSendingRecover || isAutoLoging)
 
   useEffect(()=>{
     //Recovery/invite are not the main driver here so can be second-class citizen (aka reprint from the login form)
@@ -28,6 +30,9 @@ function App() {
     if(from === "passwordRecovery"){
       actions.recovering(urlParams.get('token'))
     }
+    if(from === "autoLog"){
+      actions.autoLog(urlParams.get('token'))
+    }
 
   },[])
 
@@ -37,6 +42,7 @@ function App() {
       {isRecover && <RecoverPassword />}
       {isRecovering && <RecoveringPassword />}
       {isSendingRecover && <RecoveringPassword/>}
+      {isAutoLoging && <AutoLog />}
       {isLogining && <Login />}
     </>
   );

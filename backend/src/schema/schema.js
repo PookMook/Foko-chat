@@ -6,6 +6,7 @@ type Query {
 type Mutation{
   sendMessage(channel:ID!,message:String!,id:ID!,token:String!):Event!
   login(email:String!,password:String!):Auth!
+  autoLog(token:String!):Auth!
   register(email:String!,password:String!,username:String!):Auth!
   createChannel(name:String,participants:[ID!], id:ID!, token:String!): Channel!
 

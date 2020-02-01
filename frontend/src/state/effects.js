@@ -151,6 +151,17 @@ export default {
     return askGraphQL(payload)
 
 
+  },
+  autoLog: (token) => {
+    const payload = {
+      query:`mutation($token:String!){
+  autoLog(token:$token){
+    ${authType}
+  }
+}`,
+      variables:{token}
+    }
+    return askGraphQL(payload)
   }
 
 }
