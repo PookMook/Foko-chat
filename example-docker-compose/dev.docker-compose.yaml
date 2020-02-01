@@ -38,7 +38,8 @@ services:
       - HTTPS=false
       - JWT_SECRET_TOKEN=SuperSecureButYouShouldChangeMe
       - ALLOW_CORS_FRONTEND=http://localhost:3000
-      - SENDGRID_API_KEY=SG.SENDGRIDKEY.YouShouldAddYoursForEmailToWork
+      - "SENDGRID_API_KEY=SG.superSecure.SENDGRIDAPIKey"
+      - SENDGRID_FROM_EMAIL=automailer@your.domain.com
   front:
     build: 
       context: ./

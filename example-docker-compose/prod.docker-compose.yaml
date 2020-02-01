@@ -33,6 +33,7 @@ services:
       - LETSENCRYPT_HOST=graphql.arthurdev.duckdns.org
       - LETSENCRYPT_EMAIL=arthur.juchereau@gmail.com
       - SENDGRID_API_KEY=SG.SENDGRIDKEY.YouShouldAddYoursForEmailToWork
+      - SENDGRID_FROM_EMAIL=automailer@your.domain.com
   front:
     build: 
       context: ./
