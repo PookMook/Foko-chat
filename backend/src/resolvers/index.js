@@ -62,6 +62,7 @@ module.exports = {
       const token = veryfy(args.token,args.id)
       const success = await models.inviteToChannel({channel:args.channel,email:args.email,author:token.id,pubsub})
       effects.messageToUser(success.event,pubsub)
+      effects.inviteToChannel(success.email)
       return success
     }
   },

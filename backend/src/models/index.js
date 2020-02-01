@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 
 const memory = require('./memory')
 const mongo = require('./mongo')
-const effects = require('../effects/index')
 
 const sortIDs = require('../helpers/sortIDs')
 const isEmail = require('../helpers/isEmail')
@@ -180,7 +179,6 @@ module.exports = {
 
   },
   inviteToChannel: async ({channel,email,author,pubsub})=> {
-    let error = ""
     //test early throw
     if(!isEmail(email)){
       throw new Error('Not a correct email')
@@ -207,7 +205,7 @@ module.exports = {
     if(!fetchedUser){
       //Create user
       const username = email.split('@')[0]
-      fetchedUser = await mongo.Users.create({email,password:"",username})
+      fetchedUser = await mongo.Users.create({email,password:"invited",username})
 
       //add to memory
       const payload = {
@@ -216,23 +214,21 @@ module.exports = {
         username,
         channels:new Set()
       }
-      memory.users.set(fetchedUser.id,payload)
+      memory.users.set(fetchedUser.id.toString(),payload)
     }
 
     // TODO uncomment when releasing throw if user already in the chat
-    /* if(channelMemory.users.has(memory.users.get(fetchedUser.id))){
+    if(channelMemory.users.has(memory.users.get(fetchedUser.id))){
       throw new Error('User already in the chat')
-    } */
+    }
 
     // TODO add to chat on mongo
-    mongo.Channels.updateOne({_id:channel},{ $addToSet: { participants:  fetchedUser.id} })
+    mongo.Channels.findOneAndUpdate({_id:channel},{ $addToSet: { participants:  fetchedUser.id} }).then(res => console.log("Add participant",fetchedUser.id,"to channel",channel))
     
     //add to chat in memory
-/*     sortedParticipants.forEach(p=>{
-      const user = memory.users.get(p)
-      user.channels.add(payload)
-      payload.users.add(user)
-    }) */
+    const user = memory.users.get(fetchedUser.id.toString())
+    user.channels.add(channelMemory)
+    channelMemory.users.add(user)
     
     //+ pubsub the join
     const event = {
@@ -243,11 +239,8 @@ module.exports = {
       author:author
     }
 
-    // TODO Send email invitation
-
-
-
-    return {confirm:false, message:error,event}
+    // Send email invitation via the return and effects in resolvers
+    return {confirm:true, message:"invited",event,email:{to:email,id:fetchedUser.id.toString(),username:fetchedUser._doc.username}}
   },
 
   addEvent: (event) => {
