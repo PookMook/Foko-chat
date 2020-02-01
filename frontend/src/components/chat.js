@@ -6,7 +6,7 @@ import { useOvermind } from '../state/index';
 export default (props) => {
   const {state,actions} = useOvermind()
   const [input,setInput] = useState("")
-  const [inviteMail,setInviteMail] = useState("arthur@juchereau.com")
+  const [inviteMail,setInviteMail] = useState("")
   const { match: { params } } = props;
   const thisChannel = state.channelsById.get(params.id) || {name:"Not found or loading", events:[]}
   const handleSend = () => {
