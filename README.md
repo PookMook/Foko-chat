@@ -68,6 +68,7 @@ Production environment rely on you having a proper reverse-dns and ssl certifica
 
 ## Things to consider
 
+ - THERE ARE NO TEST IN PLACE, this wasn't a requirement and due to the limited amount of time on the project, well, there's that. Definitely one of the most important place to extend the project.
  - No love was given to the mobile version of it as the CSS is really just focused on making it work and isn't a priority.
  - The error messaging is barely handled on the front-end, (missing lot of .catch over effects) and aren't tracked at all on the backend (those will be send to the client anyway via GraphQL errors).
  Due to the limited amount of time, mostly the "happy path" as been taken into consideration (Event though Overmind's finite state machines help user get back to the "happy path" on errors).
