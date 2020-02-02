@@ -6,11 +6,11 @@ Real time chat project, still a lot of stuff to be done to be a proper usable pr
 
 ### Infrastructure
 
-Docker/docker-compose for across the board compatibility. Assignment doesn't specify a target system, so docker leaves the most door open as it is available on any OS and is the easiest way to setup a development environment regardless of pre-existing procedures.
+Docker/docker-compose for across the board compatibility. Assignment doesn't specify a target system, so docker leaves the most door open as it is available on any OS and is the easiest way to set up a development environment regardless of preexisting procedures.
 
-Docker-compose allow for an easy way to move from dev to production in a predictable way with minimum friction. It plays well with most existing reverse-proxy and SSL certification pipelines.
+Docker-compose allow for an easy way to move from development to production in a predictable way with minimum friction. It plays well with most existing reverse-proxy and SSL certification pipelines.
 
-This leaves the door open for a switch to k8 if you need to management a different kind of scale (even tho, some other part of the stack would need to be addressed)
+This leaves the door open for a switch to k8 if you need to management a different kind of scale (even though, some other part of the stack would need to be addressed)
 
 ### Frontend
 
@@ -18,9 +18,9 @@ Basic CreateReactApp, with the last version of react-router 5 (Version 6 has jus
 
 Overmind manages most actions and state of the application. This provides a clear separation between the UI rendering and the state logic. It would also help with mocking when proper testing is introduced.
 
-This architecture provides the advantage of being familiar with most developer on the react side, while providing decent performance/bundle size. One way forward could be to use an highly optimize framework like Nextjs with minimum change to the codebase.
+This architecture provides the advantage of being familiar with most developer on the react side, while providing decent performance/bundle size. One way forward could be to use an highly optimize framework like Nextjs with minimum change to the code base.
 
-Authentification is handled by JSON Web Tokens, in order to keep the backend stateless and easier to move to a decentralized architecture.
+Authentication is handled by JSON Web Tokens, in order to keep the backend stateless and easier to move to a decentralized architecture.
 
 
 ### Backend
@@ -33,9 +33,9 @@ The PubSub service is handled in memory as there's only one instance of the back
 
 The backend re-hydrates basic information from the database on startup to create a graph of active users, open channels and last messages, then keep it up to date while the service is up, to improve reactivity and limit calls to the database. This would obviously need to be handled outside the node.js memory in case of a decentralized approach, Redis could also be a great candidate here.
 
-## Deployement
+## Deployment
 
-In any case, you'll need to have docker installed on your machine/server to run the service. Docker-compose will help handle all of the deployment process for you.
+In any case, you'll need to have docker installed on your machine/server to run the service. Docker-compose will help handle all the deployment process for you.
 
 You'll also need an active SendGrid account with a verified sender email address to manage the email communication (password recovery/invitation to a channel)
 
