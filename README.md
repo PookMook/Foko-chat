@@ -64,3 +64,12 @@ docker-compose up --build
 ### Production
 
 Production environment rely on you having a proper reverse-dns and ssl certification process. dockerfile are provided for  backend/frontend optimized for production container, but you'll need to configure the example-docker-compose/prod.docker-compose.yaml file to your need.
+
+
+## Things to consider
+
+ - No love was given to the mobile version of it as the CSS is really just focus on making it work and isn't a priority.
+ - The error messaging is barely handled on the front-end, (missing lot of .catch over effects) and aren't track at all on the backend (those will be send to the client anyway via GraphQL errors). Due to the limited amount of time, mostly the "happy path" as been taken into consideration (Event though Overmind's finite state machines help user get back to the "happy path" on errors).
+ - This is a mono-instance backend, it won't scale to multiple instances. For it to work, you would need to strip the memory model layer in-between and replace it via a Redis instance or a slower always ask the DB model.
+ - There is no concept of ownership of channels, and the display of participants would be a good feature to have.
+ - Configuration to deploy easily to AWS could be a nice touch
