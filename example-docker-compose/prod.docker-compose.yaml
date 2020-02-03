@@ -15,9 +15,6 @@ services:
       context : ./
       dockerfile: backend-prod
     container_name: "chat-graphql"
-    volumes:
-      - ./backend/:/usr/src/app
-      - /usr/src/app/node_modules
     depends_on:
       - mongodb
     environment:
@@ -38,9 +35,6 @@ services:
       context: ./
       dockerfile: frontend-prod
     container_name: "chat-front"
-    volumes:
-      - ./frontend/:/usr/src/app
-      - /usr/src/app/node_modules
     depends_on:
       - graphql
     environment:
