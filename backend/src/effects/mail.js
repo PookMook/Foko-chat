@@ -44,7 +44,7 @@ Arthur`,
       console.error(e)
     }
   },
-  inviteToChannel: ({to,username,id}) => {
+  inviteToChannel: ({to,username,id,channel}) => {
     
     try{
       const token = generateToken(id)
@@ -56,7 +56,7 @@ Arthur`,
         text: `Hey ${username},
 Someone Invited you to a chat channel, follow the link bellow to interract
 
-${process.env.ALLOW_CORS_FRONTEND}/channel/5e34b72db23ce9001f87af05?from=autoLog&token=${token}
+${process.env.ALLOW_CORS_FRONTEND}/channel/${channel}?from=autoLog&token=${token}
 
 Cheers,
 Arthur`,

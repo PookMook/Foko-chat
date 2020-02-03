@@ -259,7 +259,7 @@ module.exports = {
     }
 
     // Send email invitation via the return and effects in resolvers
-    return {confirm:true, message:"invited",event,email:{to:email,id:fetchedUser.id.toString(),username:fetchedUser._doc.username}}
+    return {confirm:true, message:"invited",event,email:{to:email,id:fetchedUser.id.toString(),username:fetchedUser._doc.username, channel}}
   },
 
   addEvent: (event) => {
