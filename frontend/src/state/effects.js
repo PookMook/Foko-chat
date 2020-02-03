@@ -1,5 +1,7 @@
+import env from '../helpers/env'
+
 const askGraphQL = (payload) => {
-  return fetch(process.env.REACT_APP_PROTOCOL+'://'+process.env.REACT_APP_BACKEND,{
+  return fetch(env.REACT_APP_PROTOCOL+'://'+env.REACT_APP_BACKEND,{
     method: "POST",
     mode: "cors",
     credentials: 'include', 

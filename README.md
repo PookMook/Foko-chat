@@ -65,6 +65,8 @@ docker-compose up --build
 
 Production environment rely on you having a proper reverse-dns and ssl certification process. dockerfile are provided for  backend/frontend optimized for production container, but you'll need to configure the example-docker-compose/prod.docker-compose.yaml file to your need.
 
+You also need to set frontend/helpers/env.js to be the proper target for the backend, protocol and protocol for websockets depending on the situation you are in.
+
 
 ## Things to consider
 

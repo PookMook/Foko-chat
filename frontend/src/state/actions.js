@@ -66,9 +66,10 @@ export default {
 
   //Register
   register:({state,actions,effects}) => {
+    //console.log("Starting register")
     effects.register({...state.authForm})
     .then((response)=>{
-      console.log(response)
+      //console.log(response)
       actions.successRegister(response.register)
     })
     .catch(e=>{
@@ -124,7 +125,7 @@ export default {
     // TODO add Effect
     effects.testRecover({token:state.modal.token,password:state.modal.password})
     .then(response=>{
-      console.log(response)
+      //console.log(response)
       actions.successRecover(response.testRecover)
     })
     .catch(err=>{
@@ -180,7 +181,7 @@ export default {
         }
         else{
           //if Channel already exist, need to remove from array
-          console.log("removing ",channels[i].id)
+          //console.log("removing ",channels[i].id)
           const index = state.channels.indexOf(state.channelsById.get(channels[i].id))
           state.channels.splice(index,1)
           channels.splice(i,1)
@@ -193,7 +194,7 @@ export default {
   loadChannel: ({state,effects},id)=> {
     effects.loadChannel({channel:id,id:state.user.id,token:state.user.token})
     .then(response=>{
-      console.log(response.loadChannel)
+      //console.log(response.loadChannel)
       const loadedChannel = response.loadChannel
       //GraphQL send all in order
       loadedChannel.events = loadedChannel.events.reverse()
@@ -216,10 +217,10 @@ export default {
     let channel = state.channelsById.get(event.channel)
     if(channel){
       //Need to remove it from array, to place it on top
-      console.log("removing",channel)
+      //console.log("removing",channel)
       const index = state.channels.indexOf(channel)
       state.channels.splice(index,1)
-      console.log("channels",JSON.stringify(state.channels.length,null,1))
+      //console.log("channels",JSON.stringify(state.channels.length,null,1))
     }
     else{
       //Create channel structure

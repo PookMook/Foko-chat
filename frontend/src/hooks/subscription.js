@@ -1,6 +1,7 @@
 import {useEffect} from 'react'
 
 import GQL from '../helpers/gql'
+import env from '../helpers/env'
 
 export default ({id,token},callback) => {
   
@@ -8,8 +9,8 @@ export default ({id,token},callback) => {
   useEffect(()=>{
 
     //Open WS connection to GraphQL
-    const backend = process.env.REACT_APP_BACKEND || "localhost:3080"
-    const protocol = process.env.REACT_APP_SOCKET_PROTOCOL || "ws"
+    const backend = env.REACT_APP_BACKEND
+    const protocol = env.REACT_APP_SOCKET_PROTOCOL
     const webSocket = new WebSocket(protocol+"://"+backend, "graphql-ws")
     //Define console.log as default handling of data
     //const handleData = props.handleData || console.log
