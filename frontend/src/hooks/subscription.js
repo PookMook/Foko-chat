@@ -11,6 +11,8 @@ export default ({id,token},callback) => {
     //Open WS connection to GraphQL
     const backend = env.REACT_APP_BACKEND
     const protocol = env.REACT_APP_SOCKET_PROTOCOL
+        
+    let keepAlive 
     const webSocket = new WebSocket(protocol+"://"+backend, "graphql-ws")
     //Define console.log as default handling of data
     //const handleData = props.handleData || console.log
@@ -39,9 +41,11 @@ export default ({id,token},callback) => {
       token
     }
     
+
+
     //Behavior on responses
     webSocket.onmessage = event => {
-      const data = JSON.parse(event.data)  
+      const data = JSON.parse(event.data) 
       switch (data.type) {
         case GQL.CONNECTION_ACK: {
           webSocket.send(JSON.stringify({
@@ -49,6 +53,12 @@ export default ({id,token},callback) => {
             id:id,
             payload: { query, variables}
           }))
+          keepAlive = setInterval(()=>{
+            webSocket.send(JSON.stringify({
+              type: GQL.CONNECTION_KEEP_ALIVE,
+              id:id
+            }))
+          },25000)
           break
         }
         case GQL.CONNECTION_ERROR: {
@@ -56,6 +66,7 @@ export default ({id,token},callback) => {
           break
         }
         case GQL.CONNECTION_KEEP_ALIVE: {
+          console.log("Keeping alive!")
           break
         }
         case GQL.DATA: {
@@ -83,7 +94,10 @@ export default ({id,token},callback) => {
     }
     
     //return the cleanup function for useEffect
-    return () => webSocket.close()
+    return () => {
+      webSocket.close()
+      clearInterval(keepAlive)
+    }
     
   },[id,token,callback])
 }

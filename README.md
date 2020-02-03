@@ -77,3 +77,5 @@ You also need to set frontend/helpers/env.js to be the proper target for the bac
  - This is a mono-instance backend, it won't scale to multiple instances. For it to work, you would need to strip the memory model layer in-between and replace it via a Redis instance or a slower "always ask the DB" model.
  - There is no concept of ownership of channels, and the display of participants would be a good feature to have.
  - Configuration to deploy easily to AWS could be a nice touch
+ - The endpoints to change username/password are not active at the moment
+ - the Websocket protocol is quite fragile when going through proxy, the demo online hangs the socket after a minute without use, gonna have to fix that at the proxy level, or by implementing keepalive ping on the client side
