@@ -13,5 +13,5 @@ RUN npm install --only=production
 COPY backend ./
 
 
-EXPOSE 80 
+EXPOSE 4000 
 CMD [ "npm", "run", "prod" ]

@@ -16,5 +16,5 @@ COPY frontend ./
 RUN npm run build
 
 
-EXPOSE 80 
+EXPOSE 5000 
 CMD [ "npm", "run", "serve" ]
